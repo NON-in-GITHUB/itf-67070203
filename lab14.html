@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhA Is ThIs</title>
+    <link rel="stylesheet" href = "style2.css"
+</head>
+
+<body class=tastedee>
+    <center>
+    <div class="profile" id="profile">
+        <div class="notify"><p>666</p></div>
+    </div>
+    <div>
+        <a href ="https://www.amazon.com/Feeding-Hannibal-Connoisseurs-Janice-Poon/dp/1783297662" class="l1"><h1 id="user">'s Ingredient List</h1></a>
+        <div class=eiei>
+            <label class="l1">Set username</label>
+            <input type="text" id="input_name">
+            <button onclick="setName()" class="l3">set</button>
+        </div>
+        <div>
+            <label class="l1">Set image</label>
+            <input type="text" id="input_url">
+            <button onclick="setImg()" class="l3">set</button>
+        </div>
+    </div>
+    <div class="container">
+        <h1 class="l2">Ingredient List</h1>
+        <input type="text" id="phone_name" placeholder="Name">
+        <input type="text" id="phone_num" placeholder="Tel">
+        <button onclick="addRow()" class="l3">add</button>
+        <button onclick="saveCSV()" class="l3">export</button>
+        <table id="table" class="l4">
+            <tr>
+                <th class="l1">Num</th>
+                <th class="l1">Name</th>
+                <th class="l1">Phone</th>
+            </tr>
+        </table>
+    </div>
+    <script>
+        const username = document.getElementById("user");
+        const inputname = document.getElementById("input_name");
+        const inputurl = document.getElementById("input_url");
+        const profile = document.getElementById("profile");
+        const table = document.getElementById("table");
+        let count = 0;
+        let phonenumber = [];
+
+        function setName(){
+            username.textContent = inputname.value + "'s Ingredient List";
+            inputname.value = "";
+        }
+        function setImg(){
+            profile.style.backgroundImage = "url("+ inputurl.value +")";
+            console.log(inputurl.value);
+            inputurl.value = "";
+        }
+        function addRow(){
+            count += 1;
+            const row = document.createElement("tr");
+            const cell1 = document.createElement("td");
+            const cell2 = document.createElement("td");
+            const cell3 = document.createElement("td");
+            cell1.textContent = count;
+            cell2.textContent = phone_name.value;
+            cell3.textContent = phone_num.value;
+            row.appendChild(cell1);
+            row.appendChild(cell2);
+            row.appendChild(cell3);
+            table.appendChild(row);
+            let arr = [];
+            arr.push(count);
+            arr.push(phone_name.value);
+            arr.push(phone_num.value);
+            phonenumber.push(arr);
+            console.log(phonenumber);
+            phone_name.value = ""
+            phone_num.value = ""
+        }
+        function saveCSV() {
+            const csvContent = phonenumber.map(row => row.join(",")).join("\n"); // Convert array to CSV string
+                const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+                const link = document.createElement("a");
+                const url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", "data.csv");
+                link.style.visibility = "hidden";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+};
+    </script>
+    </center>
+</body>
+
+</html>
